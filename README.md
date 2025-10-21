@@ -14,7 +14,7 @@ go build -o git2txt
 && mv git2txt /usr/local/bin/
 ```
 
-Or download a pre-built binary from the [releases page](github.com/michael-duren/git2txt-local/releases).
+Or download a pre-built binary from the [releases page](https://github.com/michael-duren/git2txt-local/releases).
 
 ## Needs Testing
 
