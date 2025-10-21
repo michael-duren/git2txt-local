@@ -91,30 +91,28 @@ func isUTF8(filePath string) (bool, error) {
 }
 
 func processFile(filename string, writer *bufio.Writer) error {
-	// Check if file exists
 	info, err := os.Stat(filename)
 	if err != nil {
 		if os.IsNotExist(err) {
-			return nil // Skip non-existent files
+			return nil
 		}
 		return err
 	}
 
-	// Check file size
 	if info.Size() > maxFileSize {
 		fmt.Fprintf(writer, "\n\n=== %s === [LARGE FILE SKIPPED: %.2f MB]\n",
 			filename, float64(info.Size())/(1024*1024))
+		fmt.Println("Skipped large file:", filename)
 		return nil
 	}
 
-	// Check if text file
 	fileIsUTF8, err := isUTF8(filename)
 	if !fileIsUTF8 || err != nil {
 		fmt.Fprintf(writer, "\n\n=== %s === [BINARY FILE SKIPPED]\n", filename)
+		fmt.Println("Skipped binary file:", filename)
 		return nil
 	}
 
-	// Write text file
 	fmt.Fprintf(writer, "\n\n=== %s ===\n", filename)
 
 	content, err := os.ReadFile(filename)
